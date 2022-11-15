@@ -1,13 +1,10 @@
-const express = require('express');
-const app = new express();
+const http = require('http');
 
-const cors_app = require('cors');
-app.use(cors_app());
+http.createServer(function (request, response) {
+   target = process.env.TARGET ? process.env.TARGET : 'World' ;
+   msg = process.env.MSG ? process.env.MSG : 'Hello ' + target + '\n';
+   response.writeHead(200, {'Content-Type': 'text/plain'});
+   response.end(msg);
+}).listen(8080);
 
-app.get("/helloworld", (req,res) => {
-    res.send("This is a whole new world")
-});
-
-let server = app.listen(8080, () => {
-    console.log('Listening', server.address().port)
-})
+console.log('Server running at http://0.0.0.0:8080/');
